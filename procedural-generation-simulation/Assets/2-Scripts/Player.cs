@@ -19,4 +19,22 @@ public class Player : MonoBehaviour {
         unit.gridPos = tile.gridPos;
         unitgo.transform.position = tile.transform.position;
     }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Unit")) {
+            if(other.gameObject.GetComponent<Unit>() == unit) { return; }
+            print(other.gameObject.name + " eliminated " + name);
+            SimulationManager.instance.players.Remove(this);
+            Destroy(unit.gameObject);
+            Destroy(gameObject);
+
+            if(SimulationManager.instance.players.Count <= 1) {
+                SimulationManager.instance.EndSimulation();
+            }
+
+            foreach (Player player in SimulationManager.instance.players) {
+                player.unit.FindTarget();
+            }
+        }
+    }
 }

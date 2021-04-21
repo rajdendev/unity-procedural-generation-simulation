@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -22,15 +25,20 @@ public class SimulationManager : MonoBehaviour {
     private int turn;
     private float time;
 
-    private bool active;
+    private bool active, nextTurn;
 
     public static SimulationManager instance;
+
+    private const string path = @"Assets\simulation-results.xml";
+    public static List<List<Simulation>> results = new List<List<Simulation>>();
+    private static XmlSerializer serializer = new XmlSerializer(typeof(List<List<Simulation>>));
 
     private void Awake() {
         instance = this;
     }
 
     private void Start() {
+        Init();
         canvas.gameObject.SetActive(true);
         map.Generate();
 
@@ -66,14 +74,49 @@ public class SimulationManager : MonoBehaviour {
         turn++; 
         turnText.text = $"TURN: {turn}";
         playerText.text = $"PLAYERS: {players.Count}";
+
+        //NextTurn();
     }
 
-    private void EndSimulation() {
+    public void EndSimulation() {
+        if (!active) { return; }
         active = false;
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SerializeResults();
+        print("GAME OVER");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public class Simulation {
-        public int turns;
+    private void Init() {
+        try {
+            using (FileStream stream = new FileStream(path, FileMode.Open)) {
+                results = (List<List<Simulation>>)serializer.Deserialize(stream);
+            }
+        }
+        catch { Debug.Log("NOPERS"); }
+
+        if (results.Count != 3) {
+            results = new List<List<Simulation>>() {
+                new List<Simulation>(),
+                new List<Simulation>(),
+                new List<Simulation>()
+            };
+        }
     }
+
+    private void SerializeResults() {
+        results[(int)map.Settings.generationType].Add(new Simulation() { turns = turn, time = time });
+
+        try {
+            using (FileStream stream = new FileStream(path, FileMode.OpenOrCreate)) {
+                serializer.Serialize(stream, results);
+            }
+        }
+        catch { Debug.Log("Something went wrong"); }
+    }
+}
+
+[System.Serializable]
+public class Simulation {
+    public int turns;
+    public float time;
 }

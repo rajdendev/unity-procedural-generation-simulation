@@ -15,11 +15,14 @@ public class Unit : MonoBehaviour {
 
         while (remaining > 0) {
             if (!(SimulationManager.instance.players.Count > 0)) { return; }
-            if (target == null) { FindTarget(); }
+            if (target == null || path == null) {
+                FindTarget();
+            }
+            //if (gridPos == target.gridPos && target != null) {
+            //    SimulationManager.instance.players.Remove(target);
+            //    continue;
+            //}
             if (path == null || path.Count < 1) {
-                if (gridPos == target.gridPos) {
-                    return;
-                }
                 path = new List<Tile>();
                 path = SimulationManager.instance.Pathfinding.FindPath(gridPos, target.gridPos);
             }
@@ -29,7 +32,7 @@ public class Unit : MonoBehaviour {
             gridPos = next.gridPos;
             path.Remove(next);
 
-            remaining--;
+            remaining -= next.movementPenalty;
         }
     }
 
@@ -44,5 +47,8 @@ public class Unit : MonoBehaviour {
                 target = player;
             }
         }
+
+        path = new List<Tile>();
+        path = SimulationManager.instance.Pathfinding.FindPath(gridPos, target.gridPos);
     }
 }
