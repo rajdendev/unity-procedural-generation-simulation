@@ -38,7 +38,7 @@ public class Pathfinding : MonoBehaviour {
             foreach (Tile neighbour in currentTile.adjacents) {
                 if (closedSet.Contains(neighbour)) { continue; }
 
-                int newMovementCostToNeighbour = currentTile.gCost + GetDistance(currentTile, neighbour);
+                int newMovementCostToNeighbour = currentTile.gCost + GetDistance(currentTile, neighbour) + neighbour.movementPenalty;
                 if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour)) {
                     neighbour.gCost = newMovementCostToNeighbour;
                     neighbour.hCost = GetDistance(neighbour, targetTile);

@@ -741,11 +741,11 @@ MonoBehaviour:
   - name: Water
     prefab: {fileID: 5234183785725872734, guid: 792290e1d0951c94cb7c5e3686eaf6b4, type: 3}
     color: {r: 0.055802785, g: 0.26302758, b: 0.3584906, a: 1}
-    moveCost: 1
+    moveCost: 2
   - name: Land
     prefab: {fileID: 5234183785725872734, guid: 792290e1d0951c94cb7c5e3686eaf6b4, type: 3}
     color: {r: 0.45812726, g: 0.735849, b: 0.16313633, a: 1}
-    moveCost: 2
+    moveCost: 1
   settings: {fileID: 11400000, guid: 15d9830d1d5732442b9b6ca804df438a, type: 2}
   path: []
 --- !u!114 &1214650983

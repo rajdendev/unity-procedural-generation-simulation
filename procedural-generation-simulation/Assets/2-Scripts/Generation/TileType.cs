@@ -7,5 +7,5 @@ public class TileType {
     public string name;
     public GameObject prefab;
     public Color color = Color.white;
-    public float moveCost = 1;
+    public int moveCost = 1;
 }

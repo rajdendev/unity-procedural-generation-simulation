@@ -8,6 +8,7 @@ public class Tile : MonoBehaviour, IHeapItem<Tile> {
     public Tile parent;
 
     private int heapIndex;
+    public int movementPenalty;
     public int gCost;
     public int hCost;
     public int fCost {

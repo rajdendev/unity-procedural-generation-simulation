@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 128
   randomSeed: 1
-  seed: 637545703410535993
-  generationType: 1
+  seed: 637546035289030222
+  generationType: 2
   pseudorandomSettings:
     randomFillPercent: 50
   cellularAutomataSettings:

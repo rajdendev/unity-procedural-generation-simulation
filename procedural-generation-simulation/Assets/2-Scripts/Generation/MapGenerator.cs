@@ -52,6 +52,7 @@ public class MapGenerator : MonoBehaviour {
 
                 Tile t = tile.GetComponent<Tile>();
                 t.gridPos = new Vector2Int(x, y);
+                t.movementPenalty = tileTypes[grid[x, y].type].moveCost;
                 grid[x, y].tile = t;
             }
         }
