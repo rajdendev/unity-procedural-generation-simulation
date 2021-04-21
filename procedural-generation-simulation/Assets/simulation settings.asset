@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99104ae58d8695549abb3c30260571b0, type: 3}
+  m_Name: simulation settings
+  m_EditorClassIdentifier: 
+  size: 128
+  randomSeed: 1
+  seed: 637545703410535993
+  generationType: 1
+  pseudorandomSettings:
+    randomFillPercent: 50
+  cellularAutomataSettings:
+    iterations: 5
+    randomFillPercent: 50
+  perlinNoiseSettings:
+    scale: 15
+    octaves: 4
+    persistance: 0.65
+    lucunarity: 1
+    offset: {x: 0, y: 0}
+  playerColors:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
