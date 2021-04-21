@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 using TMPro;
 
 public class SimulationManager : MonoBehaviour {
+    [SerializeField, Min(1)] private int simulationAmount = 1000;
+    private static int currentSimulation = 1;
     [SerializeField] private MapGenerator map = null;
     [SerializeField] private Pathfinding pathfinding = null;
     [SerializeField] private TextMeshProUGUI timeText = null;
@@ -91,6 +93,15 @@ public class SimulationManager : MonoBehaviour {
         active = false;
         SerializeResults();
         print("GAME OVER");
+        currentSimulation++;
+        if (currentSimulation >= simulationAmount) {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
