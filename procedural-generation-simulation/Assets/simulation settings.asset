@@ -15,7 +15,7 @@ MonoBehaviour:
   size: 128
   randomSeed: 1
   seed: 637546187655727569
-  generationType: 1
+  generationType: 0
   pseudorandomSettings:
     randomFillPercent: 50
   cellularAutomataSettings:
