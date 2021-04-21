@@ -35,6 +35,8 @@ public class Player : MonoBehaviour {
             foreach (Player player in SimulationManager.instance.players) {
                 player.unit.FindTarget();
             }
+
+            SimulationManager.instance.nextTurn = true;
         }
     }
 }

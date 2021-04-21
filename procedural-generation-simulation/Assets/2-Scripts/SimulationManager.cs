@@ -25,7 +25,7 @@ public class SimulationManager : MonoBehaviour {
     private int turn;
     private float time;
 
-    private bool active, nextTurn;
+    public bool active, nextTurn;
 
     public static SimulationManager instance;
 
@@ -54,28 +54,36 @@ public class SimulationManager : MonoBehaviour {
             time += Time.deltaTime;
             timeText.text = string.Format("TIME: {0:0.00}", time);
         }
+
+        if (nextTurn) {
+            NextTurn();
+        }
     }
 
     private void StartSimulation() {
         active = true;
+        nextTurn = true;
         turn = 1;
         time = 0;
         turnText.text = $"TURN: {turn}";
         playerText.text = $"PLAYERS: {players.Count}";
-        NextTurn();
+    }
+
+    private IEnumerator Turn() {
+        nextTurn = false;
+        foreach (Player player in players) {
+            player.unit.Move();
+            yield return new WaitForEndOfFrame();
+        }
+
+        turn++;
+        turnText.text = $"TURN: {turn}";
+        playerText.text = $"PLAYERS: {players.Count}";
+        nextTurn = true;
     }
 
     public void NextTurn() {
-        //if (players.Count !> 0) { EndSimulation(); }
-        foreach (Player player in players) {
-            player.unit.Move();
-        }
-
-        turn++; 
-        turnText.text = $"TURN: {turn}";
-        playerText.text = $"PLAYERS: {players.Count}";
-
-        //NextTurn();
+        StartCoroutine(Turn());
     }
 
     public void EndSimulation() {
