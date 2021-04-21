@@ -7,11 +7,17 @@ using TMPro;
 
 public class SimulationManager : MonoBehaviour {
     [SerializeField] private MapGenerator map = null;
+    [SerializeField] private Pathfinding pathfinding = null;
     [SerializeField] private TextMeshProUGUI timeText = null;
     [SerializeField] private TextMeshProUGUI turnText = null;
+    [SerializeField] private TextMeshProUGUI playerText = null;
     [SerializeField] private GameObject canvas = null;
 
-    public GameObject playerPrefab;
+    public MapGenerator Map { get { return map; } }
+    public Pathfinding Pathfinding { get { return pathfinding; } }
+
+    public GameObject playerPrefab, unitPrefab;
+    public List<Player> players = new List<Player>();
 
     private int turn;
     private float time;
@@ -28,6 +34,10 @@ public class SimulationManager : MonoBehaviour {
         canvas.gameObject.SetActive(true);
         map.Generate();
 
+        foreach (Player player in players) {
+            player.CreateUnit();
+        }
+
         StartSimulation();
     }
 
@@ -42,22 +52,25 @@ public class SimulationManager : MonoBehaviour {
         active = true;
         turn = 1;
         time = 0;
-        UpdateText(turn);
+        turnText.text = $"TURN: {turn}";
+        playerText.text = $"PLAYERS: {players.Count}";
+        NextTurn();
     }
 
     private void NextTurn() {
-        turn++;
-        UpdateText(turn);
+        //if (players.Count !> 0) { EndSimulation(); }
+        foreach (Player player in players) {
+            player.unit.Move();
+        }
 
-
+        turn++; 
+        turnText.text = $"TURN: {turn}";
+        playerText.text = $"PLAYERS: {players.Count}";
     }
 
     private void EndSimulation() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    private void UpdateText(int turn) {
-        turnText.text = $"TURN: {turn}";
+        active = false;
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public class Simulation {

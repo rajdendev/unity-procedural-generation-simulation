@@ -49,6 +49,8 @@ public class MapGenerator : MonoBehaviour {
             player.name = $"Player[{i + 1}]";
             player.transform.parent = tile.transform;
             player.GetComponent<SpriteRenderer>().color = settings.playerColors[i];
+            player.GetComponent<Player>().gridPos = pos;
+            SimulationManager.instance.players.Add(player.GetComponent<Player>());
         }
     }
 
