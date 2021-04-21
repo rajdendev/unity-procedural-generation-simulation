@@ -28,6 +28,7 @@ public class MapGenerator : MonoBehaviour {
 
         grid = GenerateData();
         GenerateTiles();
+        GeneratePlayerSpawns();
     }
 
     private Tiles[,] GenerateData() {
@@ -36,6 +37,28 @@ public class MapGenerator : MonoBehaviour {
             GenerationTypes.CellularAutomata => CellularAutomataGeneration.Generate(settings),
             GenerationTypes.PerlinNoise => PerlinNoiseGeneration.Generate(settings),
             _ => grid,
+        };
+    }
+
+    private void GeneratePlayerSpawns() {
+        for (int i = 0; i < 4; i++) {
+            Vector2Int pos = GetSpawnSquare(i);
+            Tile tile = grid[pos.x, pos.y].tile;
+
+            GameObject player = Instantiate(SimulationManager.instance.playerPrefab, tile.transform.position, Quaternion.identity);
+            player.name = $"Player[{i + 1}]";
+            player.transform.parent = tile.transform;
+            player.GetComponent<SpriteRenderer>().color = settings.playerColors[i];
+        }
+    }
+
+    private Vector2Int GetSpawnSquare(int i) {
+        return i switch {
+            0 => new Vector2Int(Random.Range(1, settings.size / 2), Random.Range(1, settings.size / 2)),
+            1 => new Vector2Int(Random.Range(settings.size / 2 + 1, settings.size - 1), Random.Range(1, settings.size / 2)),
+            2 => new Vector2Int(Random.Range(1, settings.size / 2), Random.Range(settings.size / 2 + 1, settings.size - 1)),
+            3 => new Vector2Int(Random.Range(settings.size / 2 + 1, settings.size - 1), Random.Range(settings.size / 2 + 1, settings.size - 1)),
+            _ => new Vector2Int()
         };
     }
 

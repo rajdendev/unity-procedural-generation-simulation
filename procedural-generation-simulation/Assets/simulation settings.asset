@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 128
   randomSeed: 1
-  seed: 637546035289030222
+  seed: 637546079137765613
   generationType: 2
   pseudorandomSettings:
     randomFillPercent: 50
@@ -28,7 +28,7 @@ MonoBehaviour:
     lucunarity: 1
     offset: {x: 0, y: 0}
   playerColors:
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0.97479534, a: 1}
+  - {r: 0, g: 0, b: 0, a: 1}

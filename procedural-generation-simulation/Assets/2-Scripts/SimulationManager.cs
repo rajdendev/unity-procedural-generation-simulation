@@ -11,10 +11,18 @@ public class SimulationManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI turnText = null;
     [SerializeField] private GameObject canvas = null;
 
+    public GameObject playerPrefab;
+
     private int turn;
     private float time;
 
     private bool active;
+
+    public static SimulationManager instance;
+
+    private void Awake() {
+        instance = this;
+    }
 
     private void Start() {
         canvas.gameObject.SetActive(true);

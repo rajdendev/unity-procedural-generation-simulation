@@ -809,6 +809,7 @@ MonoBehaviour:
   timeText: {fileID: 2019638368}
   turnText: {fileID: 1385590701}
   canvas: {fileID: 396630799}
+  playerPrefab: {fileID: 3598767178400529411, guid: e9cf4421d6a8d8b4e8272f3171d78278, type: 3}
 --- !u!1 &1289272569
 GameObject:
   m_ObjectHideFlags: 0

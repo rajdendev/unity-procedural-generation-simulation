@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Map/Settings")]
 public class MapSettings : ScriptableObject {
     [Header("General")]
-    public int size = 64;
+    [Min(5)] public int size = 64;
     public bool randomSeed;
     public string seed;
 
