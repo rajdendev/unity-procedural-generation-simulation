@@ -17,8 +17,11 @@ public class Unit : MonoBehaviour {
             if (!(SimulationManager.instance.players.Count > 0)) { return; }
             if (target == null) { FindTarget(); }
             if (path == null || path.Count < 1) {
-                return;
-                //path = SimulationManager.instance.Pathfinding.FindPath(gridPos, target.gridPos);
+                if (gridPos == target.gridPos) {
+                    return;
+                }
+                path = new List<Tile>();
+                path = SimulationManager.instance.Pathfinding.FindPath(gridPos, target.gridPos);
             }
 
             Tile next = path[0];

@@ -108,19 +108,6 @@ public class MapGenerator : MonoBehaviour {
     }
 
     private bool IsInMapRange(int x, int y) => x >= 0 && x < settings.size && y >= 0 && y < settings.size;
-
-    public List<Tile> path;
-    private void OnDrawGizmos() {
-        if (grid == null || path == null) { return; }
-        for (int y = 0; y < settings.size; y++) {
-            for (int x = 0; x < settings.size; x++) {
-                if (path.Contains(grid[x, y].tile)) {
-                    Gizmos.color = Color.red;
-                    Gizmos.DrawCube(grid[x, y].tile.transform.position, Vector2.one);
-                }
-            }
-        }
-    }
 }
 
 public struct Tiles {

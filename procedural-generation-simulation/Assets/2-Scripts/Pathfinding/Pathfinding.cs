@@ -5,20 +5,16 @@ using UnityEngine;
 using System.Diagnostics;
 
 public class Pathfinding : MonoBehaviour {
-    public Vector2Int start, end;
     private MapGenerator map;
 
     private void Start() {
         map = GetComponent<MapGenerator>();
     }
 
-    private void Update() {
-        if (Input.GetButtonDown("Jump")) {
-            FindPath(start, end);
-        }
-    }
+    public List<Tile> FindPath(Vector2Int startPos, Vector2Int targetPos) {
+        List<Tile> path = new List<Tile>();
+        bool pathSuccess = false;
 
-    private void FindPath(Vector2Int startPos, Vector2Int targetPos) {
         Tile startTile = map.Grid[startPos.x, startPos.y].tile;
         Tile targetTile = map.Grid[targetPos.x, targetPos.y].tile;
 
@@ -31,8 +27,8 @@ public class Pathfinding : MonoBehaviour {
             closedSet.Add(currentTile);
 
             if (currentTile == targetTile) {
-                RetracePath(startTile, targetTile);
-                return;
+                pathSuccess = true;
+                break;
             }
 
             foreach (Tile neighbour in currentTile.adjacents) {
@@ -50,9 +46,15 @@ public class Pathfinding : MonoBehaviour {
                 }
             }
         }
+
+        if (pathSuccess) {
+            path = RetracePath(startTile, targetTile);
+        }
+
+        return path;
     }
 
-    private void RetracePath(Tile startTile, Tile endTile) {
+    private List<Tile> RetracePath(Tile startTile, Tile endTile) {
         List<Tile> path = new List<Tile>();
         Tile currentTile = endTile;
 
@@ -62,7 +64,7 @@ public class Pathfinding : MonoBehaviour {
         }
 
         path.Reverse();
-        map.path = path;
+        return path;
     }
 
     private int GetDistance(Tile tileA, Tile tileB) {

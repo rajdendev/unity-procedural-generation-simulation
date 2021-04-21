@@ -57,7 +57,7 @@ public class SimulationManager : MonoBehaviour {
         NextTurn();
     }
 
-    private void NextTurn() {
+    public void NextTurn() {
         //if (players.Count !> 0) { EndSimulation(); }
         foreach (Player player in players) {
             player.unit.Move();
