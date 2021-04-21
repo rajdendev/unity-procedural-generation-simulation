@@ -18,6 +18,8 @@ public class SimulationManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI timeText = null;
     [SerializeField] private TextMeshProUGUI turnText = null;
     [SerializeField] private TextMeshProUGUI playerText = null;
+    [SerializeField] private TextMeshProUGUI generationText = null;
+    [SerializeField] private TextMeshProUGUI simulationText = null;
     [SerializeField] private GameObject canvas = null;
 
     public MapGenerator Map { get { return map; } }
@@ -72,6 +74,8 @@ public class SimulationManager : MonoBehaviour {
         time = 0;
         turnText.text = $"TURN: {turn}";
         playerText.text = $"PLAYERS: {players.Count}";
+        generationText.text = ((GenerationTypes)currentGenerationType).ToString().ToUpper();
+        simulationText.text = $"SIMULATION: {currentSimulation + 1}/{simulationAmount}";
     }
 
     private IEnumerator Turn() {
@@ -84,6 +88,8 @@ public class SimulationManager : MonoBehaviour {
         turn++;
         turnText.text = $"TURN: {turn}";
         playerText.text = $"PLAYERS: {players.Count}";
+        generationText.text = ((GenerationTypes)currentGenerationType).ToString().ToUpper();
+        simulationText.text = $"SIMULATION: {currentSimulation + 1}/{simulationAmount}";
         nextTurn = true;
     }
 
@@ -95,7 +101,6 @@ public class SimulationManager : MonoBehaviour {
         if (!active) { return; }
         active = false;
         SerializeResults();
-        print("GAME OVER");
         currentSimulation++;
         if (currentSimulation >= simulationAmount) {
             currentGenerationType++;
