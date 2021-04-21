@@ -879,7 +879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec6d75152c3b4247be8c4c1b0fd9332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  simulationAmount: 1000
+  simulationAmount: 100
   map: {fileID: 1214650982}
   pathfinding: {fileID: 1214650983}
   timeText: {fileID: 2019638368}

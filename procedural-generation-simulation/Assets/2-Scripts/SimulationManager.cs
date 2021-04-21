@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +11,8 @@ using TMPro;
 
 public class SimulationManager : MonoBehaviour {
     [SerializeField, Min(1)] private int simulationAmount = 1000;
-    private static int currentSimulation = 1;
+    private static int currentSimulation = 0;
+    private static int currentGenerationType = 0;
     [SerializeField] private MapGenerator map = null;
     [SerializeField] private Pathfinding pathfinding = null;
     [SerializeField] private TextMeshProUGUI timeText = null;
@@ -41,6 +43,7 @@ public class SimulationManager : MonoBehaviour {
 
     private void Start() {
         Init();
+        map.Settings.generationType = (GenerationTypes)currentGenerationType;
         canvas.gameObject.SetActive(true);
         map.Generate();
 
@@ -95,11 +98,17 @@ public class SimulationManager : MonoBehaviour {
         print("GAME OVER");
         currentSimulation++;
         if (currentSimulation >= simulationAmount) {
+            currentGenerationType++;
+            currentSimulation = 0;
+            if (currentGenerationType > Enum.GetNames(typeof(GenerationTypes)).Length - 1) {
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+                UnityEditor.EditorApplication.isPlaying = false;
 #else
-            Application.Quit();
+                Application.Quit();
 #endif
+            }
+
+            map.Settings.generationType = (GenerationTypes)currentGenerationType;
         }
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
